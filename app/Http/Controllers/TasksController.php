@@ -17,7 +17,7 @@ class TasksController extends Controller
      */
   public function index()
     {
-        $tasks = Tasks::all();
+        $tasks = Task::all();
 
         return view('tasks.index', [
             'tasks' => $tasks,
@@ -32,7 +32,7 @@ class TasksController extends Controller
      */
   public function create()
     {
-        $message = new Task;
+        $task = new Task;
 
         return view('tasks.create', [
             'task' => $task,
