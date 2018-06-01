@@ -3,12 +3,13 @@
 @section('content')
 
     <h1>id: {{ $task->id }} のタスクリスト編集ページ</h1>
-    <div class="row">
+
+ <div class="row">
         <div class="col-xs-6">
             {!! Form::model($task, ['route' => ['tasks.update', $task->id], 'method' => 'put']) !!}
                 <div class="form-group">
-                    {!! Form::label('title', 'タスク:') !!}
-                    {!! Form::text('title', null, ['class' => 'form-control']) !!}
+                    {!! Form::label('status', 'タスク:') !!}
+                    {!! Form::text('status', null, ['class' => 'form-control']) !!}
                 </div>
         
                 <div class="form-group">
@@ -21,5 +22,5 @@
             {!! Form::close() !!}
         </div>
     </div>
-@endsection
 
+@endsection
