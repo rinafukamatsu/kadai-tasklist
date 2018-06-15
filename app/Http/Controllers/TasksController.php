@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
+use App\Task;
 
 class TasksController extends Controller
 {
@@ -25,7 +26,7 @@ public function index()
                 'tasks' => $tasks,
             ];
             $data += $this->counts($user);
-            return view('users.show', $data);
+            return view('tasks.index', $data);
         }else {
             return view('welcome');
         }
@@ -61,12 +62,12 @@ public function index()
         ]);
 
         $request->user()->tasks()->create([
-            'stautus' => $request->status,
+            'status' => $request->status,
              'content' => $request->content,
             
         ]);
 
-        return redirect()->back();
+      return redirect()->back();
     }    
 
     /**
@@ -77,12 +78,18 @@ public function index()
      */
    public function show($id)
     {
+        $user = \Auth::user();
         $task = Task::find($id);
-
+    if($task->user_id == $user->id){
         return view('tasks.show', [
             'task' => $task,
         ]);
+        }else{
+            return redirect('/');
+        }
     }
+    
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -92,11 +99,15 @@ public function index()
      */
  public function edit($id)
     {
+        $user = \Auth::user();
         $task = Task::find($id);
-
-        return view('tasks.edit', [
-            'task' => $task,
-        ]);
+        if($task->user_id == $user->id) {
+            return view('tasks.edit', [
+                'task' => $task,
+            ]);
+        } else {
+            return redirect('/');
+        }
     }
 
     /**
@@ -138,3 +149,4 @@ public function destroy($id)
 
         return redirect()->back();
     }
+}
