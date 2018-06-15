@@ -15,19 +15,18 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('content'); 
-//             $table->string('status',10); // content add column
+            $table->integer('user_id')->unsigned()->index();
+            $table->string('content');
             $table->timestamps();
+
+            // Foreign key constraint
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('tasks');
     }
+
 }
