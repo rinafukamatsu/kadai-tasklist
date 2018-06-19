@@ -124,13 +124,13 @@ public function index()
             'content' => 'required|max:191',
         ]);
 
-
+        $user = \Auth::user();
         $task = Task::find($id);
+         if($task->user_id == $user->id) {
         $task->status = $request->status;    // add
         $task->content = $request->content;
         $task->save();
-
-
+         }
         return redirect('/');
     }
     /**
